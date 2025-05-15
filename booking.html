@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>By His Stripes Medical Centre</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fff5f5;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .dark-mode {
+      background-color: #2b0000;
+      color: #ffe5e5;
+    }
+    header {
+      background-color: #cc0000;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+    header img.logo {
+      width: 100px;
+      float: left;
+      margin-left: 20px;
+      border-radius: 10px;
+    }
+    header img.doctor {
+      width: 120px;
+      border-radius: 50%;
+      margin-top: 10px;
+    }
+    .container {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .dark-mode .container {
+      background-color: #400000;
+      box-shadow: 0 0 10px rgba(255,255,255,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #cc0000;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input, select, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #cc0000;
+      color: white;
+      border: none;
+      margin-top: 15px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #a30000;
+    }
+    .theme-toggle,
+    .gmail-button,
+    .socials {
+      margin-top: 20px;
+      text-align: center;
+    }
+    .note {
+      background-color: #ffe5e5;
+      padding: 10px;
+      margin-top: 15px;
+      border-left: 4px solid #cc0000;
+      font-size: 14px;
+    }
+    .dark-mode .note {
+      background-color: #5a0000;
+      border-left-color: #ff9999;
+    }
+    .socials img {
+      width: 30px;
+      margin: 0 10px;
+      vertical-align: middle;
+      transition: transform 0.2s;
+    }
+    .socials img:hover {
+      transform: scale(1.1);
+    }
+    .news-ticker {
+      background-color: #ffcccc;
+      padding: 5px;
+      color: #660000;
+      font-weight: bold;
+      text-align: center;
+      position: fixed;
+      width: 100%;
+      bottom: 0;
+      animation: ticker 10s linear infinite;
+    }
+    @keyframes ticker {
+      from {
+        transform: translateX(100%);
+      }
+      to {
+        transform: translateX(-100%);
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="logo.jpg" alt="Clinic Logo" class="logo">
+  <h1>BY HIS STRIPES MEDICAL CENTRE</h1>
+  <p>Book an Appointment with Our Doctors</p>
+</header>
+
+<div class="news-ticker">
+  <span>🩺 Today's Available Doctors: Dr. Kachinga Sichizya is available. Book now!</span>
+</div>
+
+<div class="container">
+  <h2>Appointment Booking</h2>
+
+  <div class="note">
+    <strong>Note:</strong> Select a doctor to view their available days.
+  </div>
+
+  <form id="appointmentForm">
+    <label for="name">Full Name:</label>
+    <input type="text" id="name" required>
+
+    <label for="email">Email Address:</label>
+    <input type="email" id="email" required>
+
+    <label for="doctor">Select Doctor:</label>
+    <select id="doctor" onchange="updateAvailableDays()" required>
+      <option value="">-- Select Doctor --</option>
+      <option value="Dr. Kachinga Sichizya">Dr. Kachinga Sichizya</option>
+      <option value="Dr. Jane Mwale">Dr. Jane Mwale</option>
+      <option value="Dr. James Banda">Dr. James Banda</option>
+    </select>
+
+    <div id="availableDays" class="note" style="display: none;"></div>
+
+    <label for="date">Appointment Date:</label>
+    <input type="date" id="date" required>
+
+    <label for="message">Reason for Visit:</label>
+    <textarea id="message" rows="4"></textarea>
+
+    <button type="button" onclick="submitAppointment()">Submit Appointment</button>
+  </form>
+
+  <div class="gmail-button">
+    <button onclick="window.open('https://mail.google.com/mail/?view=cm&fs=1&to=dr.kachinga@example.com', '_blank')">
+      📧 Contact via Gmail
+    </button>
+  </div>
+
+  <div class="whatsapp-button">
+    <button onclick="window.open('https://wa.me/1234567890', '_blank')">
+      📱 Contact via WhatsApp
+    </button>
+  </div>
+
+  <div class="theme-toggle">
+    <button onclick="toggleTheme()">🌗 Toggle Day/Night Theme</button>
+  </div>
+
+  <div class="socials">
+    <h3>Follow Us</h3>
+    <a href="https://facebook.com" target="_blank">
+      <img src="https://cdn-icons-png.flaticon.com/512/145/145802.png" alt="Facebook">
+    </a>
+    <a href="https://twitter.com" target="_blank">
+      <img src="https://cdn-icons-png.flaticon.com/512/145/145812.png" alt="Twitter">
+    </a>
+    <a href="https://instagram.com" target="_blank">
+      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram">
+    </a>
+  </div>
+</div>
+
+<script>
+  function toggleTheme() {
+    document.body.classList.toggle("dark-mode");
+  }
+
+  function updateAvailableDays() {
+    const doctor = document.getElementById("doctor").value;
+    const dayBox = document.getElementById("availableDays");
+    let days = "";
+
+    if (doctor === "Dr. Kachinga Sichizya") {
+      days = "Tuesday, Thursday, Friday";
+    } else if (doctor === "Dr. Jane Mwale") {
+      days = "Monday, Wednesday";
+    } else if (doctor === "Dr. James Banda") {
+      days = "Monday, Tuesday, Saturday";
+    } else {
+      dayBox.style.display = "none";
+      return;
+    }
+
+    dayBox.style.display = "block";
+    dayBox.innerHTML = `<strong>Available Days:</strong> ${days}`;
+  }
+
+  function submitAppointment() {
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const doctor = document.getElementById("doctor").value;
+    const date = document.getElementById("date").value;
+    const message = document.getElementById("message").value;
+
+    const subject = `Appointment Request with ${doctor}`;
+    const body = `Full Name: ${name}%0D%0AEmail: ${email}%0D%0ADoctor: ${doctor}%0D%0AAppointment Date: ${date}%0D%0AReason for Visit: ${message}`;
+
+    window.location.href = `mailto:dr.kachinga@example.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+  }
+</script>
+
+</body>
+</html>
